@@ -1,0 +1,57 @@
+<div class="col-lg-5 panel panel-info">
+    <div class="panel-body">
+        <input class="form-control" placeholder="Filter books..." >
+        <!-- Here comes the list of cards. -->
+        <div class="cards-list">
+            <a *ngFor="let book of (books | async)" [class.active]="book === selectedBook" (click)="selectBook(book)">
+                <h6 class="text-info">{{book.name}} (<i>{{prettyDate(book.released)}}</i>)</h6>
+            </a>
+
+            <a *ngIf="loading">Loading...</a>
+        </div>
+
+    </div>
+</div>
+<div class="col-lg-7 panel panel-warning current-card">
+    <!-- Here comes the selected or newly created card's editor / detail. -->
+    <div class="panel-body" *ngIf="selectedBook">
+        <h4 class="text-success">{{selectedBook.name}}</h4>
+
+
+            <p><b>ISBN: </b> {{selectedBook.isbn}}</p>
+
+            Authors:
+            <ul>
+                <li *ngFor="let author of (selectedBook.authors)">{{author}}</li>
+            </ul>
+            <p><b>Number Of Pages:</b> {{selectedBook.numberOfPages}}</p>
+            <p><b>Publisher:</b> {{selectedBook.publisher}}</p>
+            <p><b>Country:</b> {{selectedBook.country}}</p>
+            <p><b>Media Type:</b> {{selectedBook.mediaType}}</p>
+            <p><b>Released:</b> {{prettyDate(selectedBook.released)}}</p>
+
+
+            <h4>Characters:</h4>
+            <ul>
+                <li *ngFor="let character of getCharacters() | async">{{character.name}}</li>
+            </ul>
+
+            <div class="paging">
+                <button class="col-xs-4 btn btn-info" disabled="disabled"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                <div class="col-xs-4 page-numbers">1/1</div>
+                <button class="col-xs-4 btn btn-info" disabled="disabled"><i class="glyphicon glyphicon-chevron-right"></i></button>
+            </div>
+
+            Pov Characters:
+            <ul>
+                <li *ngFor="let pov of (selectedBook.povCharacters)">{{pov}}</li>
+            </ul>
+
+        <!--<button class="btn btn-default">Save</button>
+        <button class="btn btn-warning">Cancel</button>
+        <button class="btn btn-danger pull-right">Delete</button>-->
+    </div>
+    <!--<div class="panel-body">
+        <button class="btn btn-info">Create card</button>
+    </div>-->
+</div>
