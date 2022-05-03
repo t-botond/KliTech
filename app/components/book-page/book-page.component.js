@@ -12,9 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var book_service_1 = require("../../services/book.service");
 var character_service_1 = require("../../services/character.service");
+var router_1 = require("@angular/router");
 var BookPageComponent = (function () {
-    function BookPageComponent(bookService, characterService) {
+    /**
+     *
+     * @param bookService
+     * @param route
+     * @param characterService
+     */
+    function BookPageComponent(bookService, route, characterService) {
         this.bookService = bookService;
+        this.route = route;
         this.characterService = characterService;
         this.loading = true;
         this.characters = [];
@@ -23,9 +31,16 @@ var BookPageComponent = (function () {
     BookPageComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.getBooks();
-        this.books.subscribe(function (it) {
+        this.books.subscribe(function () {
             _this.loading = false;
-            console.log("Loading is done");
+        });
+        this.route.params.subscribe(function (params) {
+            var bookId = +params['id'];
+            if (bookId) {
+                _this.bookService.getBookById("", bookId).subscribe(function (it) {
+                    _this.selectBook(it);
+                });
+            }
         });
     };
     BookPageComponent.prototype.selectBook = function (book) {
@@ -35,16 +50,18 @@ var BookPageComponent = (function () {
         this.selectedBook.characters.forEach(function (it) {
             _this.characterService.getCharacterById(it).subscribe(function (it) {
                 _this.characters.push(it);
+                _this.characters.sort(function (a, b) { return _this.getCharacterName(a).localeCompare(_this.getCharacterName(b)); });
             });
         });
         this.povCharacters = [];
         this.selectedBook.povCharacters.forEach(function (it) {
             _this.characterService.getCharacterById(it).subscribe(function (it) {
                 _this.povCharacters.push(it);
+                _this.povCharacters.sort(function (a, b) { return _this.getCharacterName(a).localeCompare(_this.getCharacterName(b)); });
             });
         });
     };
-    BookPageComponent.prototype.getCharacterID = function (url) {
+    BookPageComponent.prototype.getID = function (url) {
         return Number.parseInt(url.split('/')[5]).toString();
     };
     BookPageComponent.prototype.getBooks = function () {
@@ -65,7 +82,7 @@ BookPageComponent = __decorate([
         selector: "book-page",
         templateUrl: "./book-page.component.html"
     }),
-    __metadata("design:paramtypes", [book_service_1.BookService, character_service_1.CharacterService])
+    __metadata("design:paramtypes", [book_service_1.BookService, router_1.ActivatedRoute, character_service_1.CharacterService])
 ], BookPageComponent);
 exports.BookPageComponent = BookPageComponent;
 //# sourceMappingURL=book-page.component.js.map

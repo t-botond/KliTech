@@ -6,11 +6,10 @@
             </a>
             <div *ngIf="loading">Loading...</div>
         </div>
-
     </div>
 </div>
-<div class="col-lg-7 panel panel-warning current-card">
-    <div class="panel-body" *ngIf="selectedBook">
+<div class="col-lg-7 panel panel-warning current-card" *ngIf="selectedBook">
+    <div class="panel-body">
         <h4 class="text-success">{{selectedBook.name}}</h4>
             <p><b>ISBN: </b> {{selectedBook.isbn}}</p>
             Authors:
@@ -24,11 +23,11 @@
             <p><b>Released:</b> {{prettyDate(selectedBook.released)}}</p>
             <h4>Characters:</h4>
             <ul>
-                <li *ngFor="let character of characters"><a routerLink="/characters/{{getCharacterID(character.url)}}">{{getCharacterName(character)}}</a></li>
+                <li *ngFor="let character of characters"><a routerLink="/character/{{getID(character.url)}}">{{getCharacterName(character)}}</a></li>
             </ul>
             Pov Characters:
             <ul>
-                <li *ngFor="let character of povCharacters"><a routerLink="/characters/{{getCharacterID(character.url)}}">{{getCharacterName(character)}}</a></li>
+                <li *ngFor="let character of povCharacters"><a routerLink="/character/{{getID(character.url)}}">{{getCharacterName(character)}}</a></li>
             </ul>
     </div>
 </div>

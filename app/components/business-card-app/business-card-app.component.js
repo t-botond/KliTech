@@ -22,7 +22,7 @@ var BusinessCardAppComponent = (function () {
         var _this = this;
         this.currentPageTitle = this.router.events
             .filter(function (e) { return e instanceof router_1.NavigationEnd; })
-            .map((function () { return _.find(["Cards", "Companies", "Books"], function (t) { return _this.router.isActive('/' + t.toLowerCase(), false); }); }).bind(this));
+            .map((function () { return _.find(["Character", "Houses", "Books"], function (t) { return _this.router.isActive('/' + t.toLowerCase(), false); }); }).bind(this));
     };
     return BusinessCardAppComponent;
 }());

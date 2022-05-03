@@ -1,0 +1,102 @@
+<div class="col-lg-5 panel panel-info">
+    <div class="panel-body">
+        <div class="cards-list">
+            <a *ngFor="let house of (houses)" [class.active]="house == selectedHouse" (click)="modHouse(house)">
+                <h6 class="text-info">{{house.name}}</h6>
+            </a>
+        </div>
+        <div class="paging">
+            <button class="col-xs-4 btn btn-info"
+                    [disabled]="currentPage <= 1"
+                    (click)="currentPage=currentPage-1;getHouses(currentPage)">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+            </button>
+            <div class="col-xs-4 page-numbers">
+                {{currentPage}}/{{maxPages}}
+            </div>
+            <button class="col-xs-4 btn btn-info"
+                    [disabled]="currentPage >= maxPages - 1"
+                    (click)="currentPage=currentPage+1;getHouses(currentPage)">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div class="col-lg-7 panel panel-warning current-card" *ngIf="selectedHouse">
+    <div class="panel-body">
+        <h4 class="text-success"> {{selectedHouse.name}} </h4>
+        <p *ngIf="selectedHouse.name.length>0">
+            <b>Name: </b> {{selectedHouse.name}}
+        </p>
+        <p *ngIf="selectedHouse.region.length>0">
+            <b>Region: </b> {{selectedHouse.region}}
+        </p>
+        <p *ngIf="selectedHouse.coatOfArms.length>0">
+            <b>Coat Of Arms: </b> {{selectedHouse.coatOfArms}}
+        </p>
+        <p *ngIf="selectedHouse.words.length>0">
+            <b>Words: </b> {{selectedHouse.words}}
+        </p>
+        <div *ngIf="selectedHouse.titles.length > 0 && selectedHouse.titles[0].length>0">
+            <b>Titles</b>
+            <ul>
+                <li *ngFor="let title of selectedHouse.titles">{{title}}</li>
+            </ul>
+        </div>
+        <div *ngIf="selectedHouse.seats.length > 0 && selectedHouse.seats[0].length>0">
+            <b>Seats</b>
+            <ul>
+                <li *ngFor="let seat of selectedHouse.seats">{{seat}}</li>
+            </ul>
+        </div>
+
+
+        <p *ngIf="selectedHouse.currentLord.length>0">
+            <b>Current Lord: </b> <a *ngIf="currentLord" routerLink="/character/{{getID(currentLord.url)}}">{{getCharacterName(currentLord)}}</a>
+        </p>
+
+
+        <p *ngIf="selectedHouse.heir.length>0">
+            <b>Heir: </b> <a *ngIf="heir" routerLink="/character/{{getID(heir.url)}}">{{getCharacterName(heir)}}</a>
+        </p>
+
+        <p *ngIf="selectedHouse.overlord.length>0">
+            <b>Overlord: </b> <a *ngIf="overlord" routerLink="/houses/{{getID(overlord.url)}}">{{overlord.name}}</a>
+        </p>
+
+        <p *ngIf="selectedHouse.founded.length>0">
+            <b>Founded: </b>  {{selectedHouse.founded}}
+        </p>
+
+        <p *ngIf="selectedHouse.founder.length>0">
+            <b>Founder: </b>  <a *ngIf="founder" routerLink="/character/{{getID(founder.url)}}">{{getCharacterName(founder)}}</a>
+        </p>
+
+        <p *ngIf="selectedHouse.diedOut.length>0">
+            <b>Died out: </b>  {{selectedHouse.diedOut}}
+        </p>
+
+        <div *ngIf="selectedHouse.ancestralWeapons.length > 0 && selectedHouse.ancestralWeapons[0].length>0">
+            <b>Ancestral Weapons</b>
+            <ul>
+                <li *ngFor="let ancestralWeapon of selectedHouse.ancestralWeapons">{{ancestralWeapon}}</li>
+            </ul>
+        </div>
+
+        <div *ngIf="selectedHouse.cadetBranches.length > 0 && selectedHouse.cadetBranches[0].length>0">
+            <b>Cadet Branches</b>
+            <ul>
+                <li *ngFor="let cadetBranch of cadetBranches"><a *ngIf="cadetBranch" routerLink="/houses/{{getID(cadetBranch.url)}}">{{cadetBranch.name}}</a></li>
+            </ul>
+        </div>
+        <div *ngIf="selectedHouse.swornMembers.length > 0 && selectedHouse.swornMembers[0].length>0">
+            <b>Sworn Members</b>
+            <ul>
+                <li *ngFor="let swornMember of swornMembers"><a *ngIf="swornMember" routerLink="/character/{{getID(swornMember.url)}}">{{getCharacterName(swornMember)}}</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>

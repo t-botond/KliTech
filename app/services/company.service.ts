@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/rx";
-import { Card } from "../models/card.type";
 import { Company } from "../models/company.type";
 import * as _ from "lodash";
 

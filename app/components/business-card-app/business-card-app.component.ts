@@ -2,9 +2,6 @@
 import { Router, NavigationEnd } from '@angular/router';
 import * as _ from 'lodash';
 import { Observable } from "rxjs/rx";
-import { BookService } from "../../services/book.service";
-import {Book} from "../../models/book.type";
-import { Card } from "../../models/card.type";
 
 @Component({
     selector: 'business-card-app',
@@ -15,7 +12,8 @@ export class BusinessCardAppComponent implements OnInit {
     ngOnInit() {
         this.currentPageTitle = this.router.events
             .filter(e => e instanceof NavigationEnd)
-            .map((() => _.find(["Cards", "Companies","Books"], t => this.router.isActive('/' + t.toLowerCase(), false))).bind(this))
+            .map((() => _.find(["Character", "Houses","Books"], t => this.router.isActive('/' + t.toLowerCase(), false))).bind(this));
+
     }
     
     title = "GOT Wiki";

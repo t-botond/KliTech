@@ -1,4 +1,4 @@
-export interface RootObject {
+export interface House {
     url: string;
     name: string;
     region: string;
@@ -13,6 +13,6 @@ export interface RootObject {
     founder: string;
     diedOut: string;
     ancestralWeapons: string[];
-    cadetBranches: any[];
-    swornMembers: any[];
+    cadetBranches: string[];
+    swornMembers: string[];
 }

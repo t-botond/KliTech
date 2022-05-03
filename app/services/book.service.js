@@ -29,6 +29,15 @@ var BookService = (function () {
         });
         return tmp;
     };
+    BookService.prototype.getBookID = function (url) {
+        return Number.parseInt(url.split('/')[5]).toString();
+    };
+    BookService.prototype.getBookById = function (url, id) {
+        if (typeof id !== "undefined")
+            return this.http.get(this.bookUrl + id).map(function (response) { return response.json(); });
+        else
+            return this.http.get(this.bookUrl + this.getBookID(url)).map(function (response) { return response.json(); });
+    };
     return BookService;
 }());
 BookService = __decorate([

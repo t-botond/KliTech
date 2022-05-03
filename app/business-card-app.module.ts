@@ -4,29 +4,31 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { CollapseModule } from 'ng2-bootstrap'
-import { CompanyPageComponent } from "./components/company-page/company-page.component";
-import { CardPageComponent } from "./components/card-page/card-page.component";
 import { BusinessCardAppComponent } from "./components/business-card-app/business-card-app.component";
 import { BookService } from "./services/book.service";
-import { CompanyService } from "./services/company.service";
 import {BookPageComponent} from "./components/book-page/book-page.component";
+import {CharacterPageComponent} from "./components/character-page/character-page.component";
 import {CharacterService} from "./services/character.service";
+import {HousePageComponent} from "./components/house-page/house-page.component";
+import {HouseService} from "./services/house.service";
 
 let routes: Route[] = [
-    { path: "companies", component: CompanyPageComponent },
-    { path: "cards", component: CardPageComponent },
-    { path: "companies/:id", component: CompanyPageComponent },
-    { path: "cards/:id", component: CardPageComponent },
+    { path: "houses", component: HousePageComponent },
+    { path: "houses/:id", component: HousePageComponent },
 
     { path: "books", component: BookPageComponent },
+    { path: "books/:id", component: BookPageComponent },
+
+    { path: "character", component: CharacterPageComponent},
+    { path: "character/:id", component: CharacterPageComponent},
 
 ];
 
 @NgModule({
     imports: [BrowserModule, RouterModule.forRoot(routes), FormsModule, HttpModule, CollapseModule.forRoot()],
-    declarations: [BusinessCardAppComponent, CompanyPageComponent, CardPageComponent,BookPageComponent],
+    declarations: [BusinessCardAppComponent, HousePageComponent,BookPageComponent, CharacterPageComponent],
     exports: [],
-    providers: [BookService, CompanyService,CharacterService],
+    providers: [BookService, HouseService,CharacterService],
     bootstrap: [BusinessCardAppComponent]
 })
 export class BusinessCardAppModule { }

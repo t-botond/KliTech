@@ -2,7 +2,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/rx";
 import { Http } from '@angular/http';
 import {Book} from "../models/book.type";
-import {connectableObservableDescriptor} from "rxjs/observable/ConnectableObservable";
+import {Character} from "../models/character.type";
+
 
 @Injectable()
 export class BookService {
@@ -11,7 +12,6 @@ export class BookService {
     private hasCopy:boolean=false;
 
     constructor(private http: Http) {
-
     }
 
 
@@ -24,25 +24,12 @@ export class BookService {
         });
         return tmp;
     }
-
-
-
-/*
-    private load() {
-        let ls=JSON.parse(localStorage.getItem('books'));
-        if(ls != null && ls.length>0){
-            this.books=ls;
-            console.log("Local storage books is not empty");
-        }else{
-            this.http.get(this.bookUrl).map(response => response.json()).subscribe(it=>{
-                this.books=it;
-                this.save()
-            });
-        }
+    getBookID(url:string):string{
+        return Number.parseInt(url.split('/')[5]).toString();
     }
 
-    private save() {
-        localStorage.setItem('books', JSON.stringify(this.books));
+    getBookById(url:string, id?:number):Observable<Book>{
+        if(typeof id!=="undefined")return this.http.get(this.bookUrl+id).map(response => response.json());
+        else return this.http.get(this.bookUrl+this.getBookID(url)).map(response => response.json());
     }
- */
 }

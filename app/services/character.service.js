@@ -10,37 +10,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var rx_1 = require("rxjs/rx");
 var http_1 = require("@angular/http");
 var CharacterService = (function () {
     function CharacterService(http) {
         this.http = http;
         this.characterUrl = 'https://www.anapioficeandfire.com/api/characters/';
     }
-    CharacterService.prototype.getCharacters = function () {
-        return rx_1.Observable.of(this.characters);
+    CharacterService.prototype.getCharacters = function (pageNumber, pageSize) {
+        if (pageNumber === void 0) { pageNumber = 1; }
+        if (pageSize === void 0) { pageSize = 10; }
+        return this.http.get(this.characterUrl + "?pageSize=" + pageSize + "&page=" + pageNumber).map(function (response) { return response.json(); });
     };
     CharacterService.prototype.getCharacterID = function (url) {
         return Number.parseInt(url.split('/')[5]).toString();
     };
-    CharacterService.prototype.getCharacterById = function (character) {
-        return this.http.get(this.characterUrl + this.getCharacterID(character)).map(function (response) { return response.json(); });
-    };
-    CharacterService.prototype.load = function () {
-        var _this = this;
-        var ls = JSON.parse(localStorage.getItem('characters'));
-        if (ls) {
-            this.characters = ls;
-        }
-        else {
-            this.http.get(this.characterUrl + "?pageSize=50").map(function (response) { return response.json(); }).subscribe(function (it) {
-                _this.characters = it;
-                _this.save();
-            });
-        }
-    };
-    CharacterService.prototype.save = function () {
-        localStorage.setItem('characters', JSON.stringify(this.characters));
+    CharacterService.prototype.getCharacterById = function (url, id) {
+        if (typeof id !== "undefined")
+            return this.http.get(this.characterUrl + id).map(function (response) { return response.json(); });
+        else
+            return this.http.get(this.characterUrl + this.getCharacterID(url)).map(function (response) { return response.json(); });
     };
     return CharacterService;
 }());
