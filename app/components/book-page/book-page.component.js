@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var book_service_1 = require("../../services/book.service");
-var rx_1 = require("rxjs/rx");
 var character_service_1 = require("../../services/character.service");
 var BookPageComponent = (function () {
     function BookPageComponent(bookService, characterService) {
@@ -19,10 +18,34 @@ var BookPageComponent = (function () {
         this.characterService = characterService;
         this.loading = true;
         this.characters = [];
+        this.povCharacters = [];
     }
     BookPageComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.getBooks();
-        this.loading = false;
+        this.books.subscribe(function (it) {
+            _this.loading = false;
+            console.log("Loading is done");
+        });
+    };
+    BookPageComponent.prototype.selectBook = function (book) {
+        var _this = this;
+        this.selectedBook = book;
+        this.characters = [];
+        this.selectedBook.characters.forEach(function (it) {
+            _this.characterService.getCharacterById(it).subscribe(function (it) {
+                _this.characters.push(it);
+            });
+        });
+        this.povCharacters = [];
+        this.selectedBook.povCharacters.forEach(function (it) {
+            _this.characterService.getCharacterById(it).subscribe(function (it) {
+                _this.povCharacters.push(it);
+            });
+        });
+    };
+    BookPageComponent.prototype.getCharacterID = function (url) {
+        return Number.parseInt(url.split('/')[5]).toString();
     };
     BookPageComponent.prototype.getBooks = function () {
         this.books = this.bookService.getBooks();
@@ -30,21 +53,10 @@ var BookPageComponent = (function () {
     BookPageComponent.prototype.prettyDate = function (date) {
         return date.toString().substr(0, 10);
     };
-    BookPageComponent.prototype.selectBook = function (book) {
-        var _this = this;
-        this.selectedBook = book;
-        this.characters = [];
-        for (var i = 0; i < 5; ++i) {
-            this.getCharacter(this.selectedBook.characters[i]).subscribe(function (it) {
-                _this.characters.push(it);
-            });
-        }
-    };
-    BookPageComponent.prototype.getCharacters = function () {
-        return rx_1.Observable.of(this.characters);
-    };
-    BookPageComponent.prototype.getCharacter = function (id) {
-        return this.characterService.getCharacterById(id);
+    BookPageComponent.prototype.getCharacterName = function (c) {
+        if (c.name === "")
+            return c.aliases[0];
+        return c.name;
     };
     return BookPageComponent;
 }());

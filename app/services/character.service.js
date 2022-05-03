@@ -16,28 +16,15 @@ var CharacterService = (function () {
     function CharacterService(http) {
         this.http = http;
         this.characterUrl = 'https://www.anapioficeandfire.com/api/characters/';
-        this.load();
     }
     CharacterService.prototype.getCharacters = function () {
         return rx_1.Observable.of(this.characters);
     };
     CharacterService.prototype.getCharacterID = function (url) {
-        return Number.parseInt(url.split('/')[5]);
+        return Number.parseInt(url.split('/')[5]).toString();
     };
-    CharacterService.prototype.getCharacterById = function (id) {
-        var _this = this;
-        var local = this.characters.find(function (it) { return it.url == id; });
-        if (typeof local !== "undefined") {
-            return rx_1.Observable.of(local);
-        }
-        else {
-            var justLoaded = this.http.get(this.characterUrl + this.getCharacterID(id)).map(function (response) { return response.json(); });
-            justLoaded.subscribe(function (it) {
-                _this.characters.push(it);
-                _this.save();
-            });
-            return justLoaded;
-        }
+    CharacterService.prototype.getCharacterById = function (character) {
+        return this.http.get(this.characterUrl + this.getCharacterID(character)).map(function (response) { return response.json(); });
     };
     CharacterService.prototype.load = function () {
         var _this = this;

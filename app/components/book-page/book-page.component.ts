@@ -6,6 +6,7 @@ import {DateFormatter} from "ng2-bootstrap";
 import {CharacterService} from "../../services/character.service";
 import {resolve} from "systemjs";
 import {Character} from "../../models/character.type";
+import {forEach} from "lodash";
 
 @Component({
     selector: "book-page",
@@ -18,33 +19,48 @@ export class BookPageComponent implements OnInit {
     selectedBook:Book;
     loading:boolean=true;
 
+    characters:Character[]=[];
+    povCharacters:Character[]=[];
+
     ngOnInit() {
         this.getBooks();
-        this.loading=false;
+        this.books.subscribe(it=>{
+            this.loading=false;
+            console.log("Loading is done");
+        });
     }
+
+    selectBook(book:Book){
+        this.selectedBook=book;
+        this.characters=[];
+        this.selectedBook.characters.forEach(it=>{
+            this.characterService.getCharacterById(it).subscribe(it=>{
+                this.characters.push(it);
+            });
+        });
+        this.povCharacters=[];
+        this.selectedBook.povCharacters.forEach(it=>{
+            this.characterService.getCharacterById(it).subscribe(it=>{
+                this.povCharacters.push(it);
+            });
+        });
+    }
+
+    getCharacterID(url:string):string{
+        return Number.parseInt(url.split('/')[5]).toString();
+    }
+
     getBooks() {
         this.books = this.bookService.getBooks()
     }
+
     prettyDate(date:Date):string{
         return date.toString().substr(0,10);
     }
 
-    characters:Character[]=[];
-    selectBook(book:Book){
-        this.selectedBook=book;
-        this.characters=[];
-        for(let i=0;i<5;++i){
-            this.getCharacter(this.selectedBook.characters[i]).subscribe(it=>{
-                this.characters.push(it);
-            });
-        }
-
-    }
-    getCharacters(){
-        return Observable.of(this.characters);
+    getCharacterName(c:Character):string{
+        if(c.name==="") return c.aliases[0];
+        return c.name;
     }
 
-    getCharacter(id:string):Observable<Character>{
-        return this.characterService.getCharacterById(id);
-    }
 }

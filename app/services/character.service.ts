@@ -2,38 +2,29 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/rx";
 import { Http } from '@angular/http';
 import {Character} from "../models/character.type";
+import {forEach} from "lodash";
+import {observable} from "rxjs/symbol/observable";
+import {concatStatic} from "rxjs/operator/concat";
 
 @Injectable()
 export class CharacterService {
     private characters: Character[];
     private characterUrl:string='https://www.anapioficeandfire.com/api/characters/';
 
-    constructor(private http: Http) {
-        this.load();
-    }
+
+    constructor(private http: Http) {}
 
 
     getCharacters():Observable<Character[]>{
         return Observable.of(this.characters);
     }
 
-
-    getCharacterID(url:string){
-        return Number.parseInt(url.split('/')[5]);
-
+    getCharacterID(url:string):string{
+        return Number.parseInt(url.split('/')[5]).toString();
     }
-    getCharacterById(id:string):Observable<Character>{
-        let local=this.characters.find(it=>it.url==id);
-        if(typeof local!=="undefined"){
-            return Observable.of(local);
-        }else{
-            let justLoaded= this.http.get(this.characterUrl+this.getCharacterID(id)).map(response => response.json());
-            justLoaded.subscribe(it=>{
-                this.characters.push(it);
-                this.save();
-            });
-            return justLoaded;
-        }
+
+    getCharacterById(character:string):Observable<Character>{
+        return this.http.get(this.characterUrl+this.getCharacterID(character)).map(response => response.json());
     }
 
 

@@ -16,26 +16,18 @@ var BookService = (function () {
     function BookService(http) {
         this.http = http;
         this.bookUrl = 'https://www.anapioficeandfire.com/api/books/';
-        this.load();
+        this.hasCopy = false;
     }
     BookService.prototype.getBooks = function () {
-        return rx_1.Observable.of(this.books);
-    };
-    BookService.prototype.load = function () {
         var _this = this;
-        var ls = JSON.parse(localStorage.getItem('books'));
-        if (ls) {
-            this.books = ls;
-        }
-        else {
-            this.http.get(this.bookUrl).map(function (response) { return response.json(); }).subscribe(function (it) {
-                _this.books = it;
-                _this.save();
-            });
-        }
-    };
-    BookService.prototype.save = function () {
-        localStorage.setItem('books', JSON.stringify(this.books));
+        if (this.hasCopy)
+            return rx_1.Observable.of(this.books);
+        var tmp = this.http.get(this.bookUrl).map(function (response) { return response.json(); });
+        tmp.subscribe(function (it) {
+            _this.books = it;
+            _this.hasCopy = true;
+        });
+        return tmp;
     };
     return BookService;
 }());
