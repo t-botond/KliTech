@@ -1,106 +1,96 @@
-<div class="col-lg-5 panel panel-info">
-    <div class="panel-body">
-        <div class="cards-list">
-            <a *ngFor="let character of (characters)" [class.active]="character == selectedCharacter" (click)="modCharacter(character)">
-                <h6 class="text-info">{{getCharacterName(character)}}</h6>
-
-            </a>
-        </div>
-        <div class="paging">
-            <button class="col-xs-4 btn btn-info"
-                    [disabled]="currentPage <= 1"
-                    (click)="currentPage=currentPage-1;getCharacters(currentPage)">
-                <i class="glyphicon glyphicon-chevron-left"></i>
-            </button>
-            <div class="col-xs-4 page-numbers">
-                {{currentPage}}/{{maxPages}}
-            </div>
-            <button class="col-xs-4 btn btn-info"
-                    [disabled]="currentPage >= maxPages - 1"
-                    (click)="currentPage=currentPage+1;getCharacters(currentPage)">
-                <i class="glyphicon glyphicon-chevron-right"></i>
-            </button>
-        </div>
+<div class="col-lg-5" style="margin-bottom: 5px">
+    <div class="list-group">
+        <a class="list-group-item active"><i class="bi bi-file-person"></i> Characters:</a>
+        <a class="list-group-item list-group-item-action" *ngFor="let character of (characters)" [class.active]="character == selectedCharacter" (click)="modCharacter(character)">
+            {{getCharacterName(character)}}
+        </a>
 
     </div>
+
+    <div class="paging">
+        <button class="col-xs-4 btn btn-primary"
+                [disabled]="currentPage <= 1"
+                (click)="currentPage=currentPage-1;getCharacters(currentPage)">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </button>
+        <div class="col-xs-4 page-numbers">
+            {{currentPage}}/{{maxPages}}
+        </div>
+        <button class="col-xs-4 btn btn-primary"
+                [disabled]="currentPage >= maxPages - 1"
+                (click)="currentPage=currentPage+1;getCharacters(currentPage)">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </button>
+    </div>
 </div>
-<div class="col-lg-7 panel panel-warning current-card" *ngIf="selectedCharacter">
-    <div class="panel-body">
-        <h4 class="text-success"> {{getCharacterName(selectedCharacter)}} </h4>
-        <p *ngIf="selectedCharacter.name.length>0">
-            <b>Name: </b> {{selectedCharacter.name}}
-        </p>
-        <p *ngIf="selectedCharacter.gender.length>0">
-            <b>Gender: </b> {{selectedCharacter.gender}}
-        </p>
-        <p *ngIf="selectedCharacter.culture.length>0">
-            <b>Culture: </b> {{selectedCharacter.culture}}
-        </p>
-        <p *ngIf="selectedCharacter.born.length>0">
-            <b>Born: </b> {{selectedCharacter.born}}
-        </p>
-        <p *ngIf="selectedCharacter.died.length>0">
-            <b>Died: </b> {{selectedCharacter.died}}
-        </p>
-        <div *ngIf="selectedCharacter.titles.length > 0 && selectedCharacter.titles[0].length>0">
-            <b>Titles</b>
-            <ul>
-                <li *ngFor="let title of selectedCharacter.titles">{{title}}</li>
-            </ul>
+
+<div class="col-lg-7 list-group" *ngIf="selectedCharacter">
+    <div class="panel-body list-group-item">
+        <h1>
+            <i class="bi bi-person"></i>{{getCharacterName(selectedCharacter)}}
+        </h1>
+        <ul class="list-group">
+            <li class="list-group-item active"><i class="bi bi-info-circle"></i> Info:</li>
+            <li class="list-group-item" *ngIf="selectedCharacter.name.length>0">
+                <b>Name: </b> {{selectedCharacter.name}}
+            </li>
+            <li class="list-group-item" *ngIf="selectedCharacter.gender.length>0">
+                <b>Gender: </b> {{selectedCharacter.gender}}
+            </li>
+            <li class="list-group-item" *ngIf="selectedCharacter.culture.length>0">
+                <b>Culture: </b> {{selectedCharacter.culture}}
+            </li>
+            <li class="list-group-item" *ngIf="selectedCharacter.born.length>0">
+                <b>Born: </b> {{selectedCharacter.born}}
+            </li>
+            <li class="list-group-item" *ngIf="selectedCharacter.died.length>0">
+                <b>Died: </b> {{selectedCharacter.died}}
+            </li>
+            <li class="list-group-item" *ngIf="selectedCharacter.father.length>0">
+                <b>Father: </b> <a routerLink="/character/{{getID(selectedCharacter.father)}}">{{getCharacterName(father)}}</a>
+            </li>
+            <li class="list-group-item" *ngIf="selectedCharacter.mother.length>0">
+                <b>Mother: </b> <a routerLink="/character/{{getID(selectedCharacter.mother)}}">{{getCharacterName(mother)}}</a>
+            </li>
+            <li class="list-group-item" *ngIf="selectedCharacter.spouse.length>0">
+                <b>Spouse: </b> <a routerLink="/character/{{getID(selectedCharacter.spouse)}}">{{getCharacterName(spouse)}}</a>
+            </li>
+        </ul>
+
+        <ul class="list-group" *ngIf="selectedCharacter.titles.length > 0 && selectedCharacter.titles[0].length>0">
+            <li class="list-group-item active"><i class="bi bi-eyeglasses"></i> Titles:</li>
+            <li class="list-group-item list-group-item-action" *ngFor="let title of selectedCharacter.titles">{{title}}</li>
+        </ul>
+
+        <ul class="list-group" *ngIf="selectedCharacter.aliases.length > 0 && selectedCharacter.aliases[0].length>0">
+            <li class="list-group-item active"><i class="bi bi-person"></i> Aliases:</li>
+            <li class="list-group-item" *ngFor="let alias of selectedCharacter.aliases">{{alias}}</li>
+        </ul>
+
+        <div class="list-group" *ngIf="selectedCharacter.allegiances.length > 0 && selectedCharacter.allegiances[0].length>0">
+            <a class="list-group-item active"><i class="bi bi-house-door"></i> Allegiances:</a>
+            <a class="list-group-item list-group-item-action" *ngFor="let allegiance of allegiances" routerLink="/houses/{{getID(allegiance.url)}}">{{allegiance.name}}</a>
         </div>
 
-        <div *ngIf="selectedCharacter.aliases.length > 0 && selectedCharacter.aliases[0].length>0">
-            <b>Aliases</b>
-            <ul>
-                <li *ngFor="let alias of selectedCharacter.aliases">{{alias}}</li>
-            </ul>
-        </div>
-
-
-        <p *ngIf="selectedCharacter.father.length>0">
-            <b>Father: </b> <a routerLink="/character/{{getID(selectedCharacter.father)}}">{{getCharacterName(father)}}</a>
-        </p>
-        <p *ngIf="selectedCharacter.mother.length>0">
-            <b>Mother: </b> <a routerLink="/character/{{getID(selectedCharacter.mother)}}">{{getCharacterName(mother)}}</a>
-        </p>
-        <p *ngIf="selectedCharacter.spouse.length>0">
-            <b>Spouse: </b> <a routerLink="/character/{{getID(selectedCharacter.spouse)}}">{{getCharacterName(spouse)}}</a>
-        </p>
-
-
-        <div *ngIf="selectedCharacter.allegiances.length > 0 && selectedCharacter.allegiances[0].length>0">
-            <b>Allegiances</b>
-            <ul>
-                <li *ngFor="let allegiance of allegiances"><a routerLink="/houses/{{getID(allegiance.url)}}">{{allegiance.name}}</a></li>
-            </ul>
-        </div>
-
-        <div *ngIf="selectedCharacter.books.length > 0 && selectedCharacter.books[0].length>0">
-            <b>Books</b>
-            <ul>
-                <li *ngFor="let book of books"><a routerLink="/books/{{getID(book.url)}}">{{book.name}}</a></li>
-            </ul>
+        <div class="list-group" *ngIf="selectedCharacter.books.length > 0 && selectedCharacter.books[0].length>0">
+            <a class="list-group-item active"><i class="bi bi-book"></i> Books:</a>
+            <a class="list-group-item list-group-item-action" *ngFor="let book of books" routerLink="/books/{{getID(book.url)}}">{{book.name}}</a>
         </div>
 
         <div *ngIf="selectedCharacter.povBooks.length > 0 && selectedCharacter.povBooks[0].length>0">
-            <b>Pov Books</b>
-            <ul>
-                <li *ngFor="let book of povBooks"><a routerLink="/books/{{getID(book.url)}}">{{book.name}}</a></li>
-            </ul>
+            <a class="list-group-item active"><i class="bi bi-book"></i> Pov Books:</a>
+            <a class="list-group-item list-group-item-action" *ngFor="let book of povBooks" routerLink="/books/{{getID(book.url)}}">{{book.name}}</a>
+
         </div>
 
-        <div *ngIf="selectedCharacter.tvSeries.length > 0 && selectedCharacter.tvSeries[0].length>0">
-            <b>TV Series</b>
-            <ul>
-                <li *ngFor="let show of selectedCharacter.tvSeries">{{show}}</li>
-            </ul>
-        </div>
+        <ul class="list-group" *ngIf="selectedCharacter.tvSeries.length > 0 && selectedCharacter.tvSeries[0].length>0">
+            <li class="list-group-item active"><i class="bi bi-tv"></i> TV Series:</li>
+            <li class="list-group-item" *ngFor="let show of selectedCharacter.tvSeries">{{show}}</li>
+        </ul>
 
-        <div *ngIf="selectedCharacter.playedBy.length > 0 && selectedCharacter.playedBy[0].length>0">
-            <b>Played By</b>
-            <ul>
-                <li *ngFor="let actor of selectedCharacter.playedBy">{{actor}}</li>
-            </ul>
-        </div>
+        <ul class="list-group" *ngIf="selectedCharacter.playedBy.length > 0 && selectedCharacter.playedBy[0].length>0">
+            <li class="list-group-item active"><i class="bi bi-person"></i> Played By:</li>
+            <li class="list-group-item" *ngFor="let actor of selectedCharacter.playedBy">{{actor}}</li>
+        </ul>
     </div>
 </div>

@@ -15,10 +15,10 @@ var character_service_1 = require("../../services/character.service");
 var router_1 = require("@angular/router");
 var BookPageComponent = (function () {
     /**
-     *
-     * @param bookService
-     * @param route
-     * @param characterService
+     * Book komponens konstruktor
+     * @param bookService Adatok lekérésére
+     * @param route Kiválasztott könyv URL-ban való átadására
+     * @param characterService A könyvben szereplők nevének a feloldására
      */
     function BookPageComponent(bookService, route, characterService) {
         this.bookService = bookService;
@@ -28,6 +28,9 @@ var BookPageComponent = (function () {
         this.characters = [];
         this.povCharacters = [];
     }
+    /**
+     * Inicializáláskor betöltjük a könyvek listáját, és ha van, a kiválasztott könyvet.
+     */
     BookPageComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.getBooks();
@@ -43,6 +46,10 @@ var BookPageComponent = (function () {
             }
         });
     };
+    /**
+     * Egy bizonyos könyv kiválasztására
+     * @param book A könyv, aminek a részleteit szeretnénk látni
+     */
     BookPageComponent.prototype.selectBook = function (book) {
         var _this = this;
         this.selectedBook = book;
@@ -61,15 +68,30 @@ var BookPageComponent = (function () {
             });
         });
     };
+    /**
+     * Entitás ID-ját állítja elő
+     * @param url Entitás URL-je
+     */
     BookPageComponent.prototype.getID = function (url) {
         return Number.parseInt(url.split('/')[5]).toString();
     };
+    /**
+     * Könyvek listájának lekérdezése a service-ből
+     */
     BookPageComponent.prototype.getBooks = function () {
         this.books = this.bookService.getBooks();
     };
+    /**
+     * Formázottan jeleníti meg a dátumot
+     * @param date Dátum objektum amit meg szeretnénk jeleníteni.
+     */
     BookPageComponent.prototype.prettyDate = function (date) {
         return date.toString().substr(0, 10);
     };
+    /**
+     *
+     * @param c
+     */
     BookPageComponent.prototype.getCharacterName = function (c) {
         if (c.name === "")
             return c.aliases[0];

@@ -18,15 +18,15 @@ export class BookPageComponent implements OnInit {
     povCharacters:Character[]=[];
 
     /**
-     * 
-     * @param bookService
-     * @param route
-     * @param characterService
+     * Book komponens konstruktor
+     * @param bookService Adatok lekérésére
+     * @param route Kiválasztott könyv URL-ban való átadására
+     * @param characterService A könyvben szereplők nevének a feloldására
      */
     constructor(private bookService: BookService, private route: ActivatedRoute, private characterService: CharacterService ) {}
 
     /**
-     *
+     * Inicializáláskor betöltjük a könyvek listáját, és ha van, a kiválasztott könyvet.
      */
     ngOnInit() {
         this.getBooks();
@@ -45,8 +45,8 @@ export class BookPageComponent implements OnInit {
     }
 
     /**
-     *
-     * @param book
+     * Egy bizonyos könyv kiválasztására
+     * @param book A könyv, aminek a részleteit szeretnénk látni
      */
     selectBook(book:Book){
         this.selectedBook=book;
@@ -67,23 +67,23 @@ export class BookPageComponent implements OnInit {
     }
 
     /**
-     *
-     * @param url
+     * Entitás ID-ját állítja elő
+     * @param url Entitás URL-je
      */
     getID(url:string):string{
         return Number.parseInt(url.split('/')[5]).toString();
     }
 
     /**
-     *
+     * Könyvek listájának lekérdezése a service-ből
      */
     getBooks() {
         this.books = this.bookService.getBooks()
     }
 
     /**
-     *
-     * @param date
+     * Formázottan jeleníti meg a dátumot
+     * @param date Dátum objektum amit meg szeretnénk jeleníteni.
      */
     prettyDate(date:Date):string{
         return date.toString().substr(0,10);

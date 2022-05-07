@@ -1,33 +1,38 @@
-<div class="col-lg-5 panel panel-info">
-    <div class="panel-body">
-        <div class="cards-list">
-            <a *ngFor="let book of (books | async)" [class.active]="book === selectedBook" (click)="selectBook(book)">
-                <h6 class="text-info">{{book.name}} (<i>{{prettyDate(book.released)}}</i>)</h6>
-            </a>
-            <div *ngIf="loading">Loading...</div>
-        </div>
-    </div>
+<div class="col-lg-5 list-group">
+    <a class="list-group-item active"><i class="bi bi-book"></i> Books:</a>
+    <a class="list-group-item list-group-item-action" *ngFor="let book of (books | async)" [class.active]="book === selectedBook" (click)="selectBook(book)">
+        <b>{{book.name}}</b> (<i>{{prettyDate(book.released)}}</i>)
+    </a>
+    <div class="list-group-item list-group-item-action" *ngIf="loading">Loading...</div>
 </div>
-<div class="col-lg-7 panel panel-warning current-card" *ngIf="selectedBook">
-    <div class="panel-body">
-        <h4 class="text-success">{{selectedBook.name}}</h4>
-            <p><b>ISBN: </b> {{selectedBook.isbn}}</p>
-            Authors:
-            <ul>
-                <li *ngFor="let author of (selectedBook.authors)">{{author}}</li>
+
+<div class="col-lg-7 list-group" *ngIf="selectedBook">
+    <div class="list-group-item">
+        <h1><i class="bi bi-book"></i> {{selectedBook.name}}</h1>
+
+            <div class="list-group">
+                <a class="list-group-item active"><i class="bi bi-pen"></i> Authors:</a>
+                <a class="list-group-item list-group-item-action" *ngFor="let author of (selectedBook.authors)">{{author}}</a>
+            </div>
+
+            <ul class="list-group">
+                <li class="list-group-item active"><i class="bi bi-info-circle"></i> Info:</li>
+                <li class="list-group-item"><b>ISBN: </b> {{selectedBook.isbn}}</li>
+                <li class="list-group-item"><b>Number Of Pages:</b> {{selectedBook.numberOfPages}}</li>
+                <li class="list-group-item"><b>Publisher:</b> {{selectedBook.publisher}}</li>
+                <li class="list-group-item"><b>Country:</b> {{selectedBook.country}}</li>
+                <li class="list-group-item"><b>Media Type:</b> {{selectedBook.mediaType}}</li>
+                <li class="list-group-item"><b>Released:</b> {{prettyDate(selectedBook.released)}}</li>
             </ul>
-            <p><b>Number Of Pages:</b> {{selectedBook.numberOfPages}}</p>
-            <p><b>Publisher:</b> {{selectedBook.publisher}}</p>
-            <p><b>Country:</b> {{selectedBook.country}}</p>
-            <p><b>Media Type:</b> {{selectedBook.mediaType}}</p>
-            <p><b>Released:</b> {{prettyDate(selectedBook.released)}}</p>
-            <h4>Characters:</h4>
-            <ul>
-                <li *ngFor="let character of characters"><a routerLink="/character/{{getID(character.url)}}">{{getCharacterName(character)}}</a></li>
-            </ul>
-            Pov Characters:
-            <ul>
-                <li *ngFor="let character of povCharacters"><a routerLink="/character/{{getID(character.url)}}">{{getCharacterName(character)}}</a></li>
-            </ul>
+
+            <div class="list-group">
+                <a class="list-group-item active"><i class="bi bi-person"></i> Characters:</a>
+                <a class="list-group-item list-group-item-action" *ngFor="let character of characters" routerLink="/character/{{getID(character.url)}}">{{getCharacterName(character)}}</a>
+            </div>
+
+            <div class="list-group" *ngIf="selectedBook.povCharacters.length>0">
+                <a class="list-group-item active"><i class="bi bi-file-person"></i> Pov Characters:</a>
+                <a *ngFor="let character of povCharacters" class="list-group-item list-group-item-action" routerLink="/character/{{getID(character.url)}}">{{getCharacterName(character)}}</a>
+            </div>
     </div>
 </div>

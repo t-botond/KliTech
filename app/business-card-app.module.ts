@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { CollapseModule } from 'ng2-bootstrap'
-import { BusinessCardAppComponent } from "./components/business-card-app/business-card-app.component";
+
 import { BookService } from "./services/book.service";
-import {BookPageComponent} from "./components/book-page/book-page.component";
-import {CharacterPageComponent} from "./components/character-page/character-page.component";
-import {CharacterService} from "./services/character.service";
-import {HousePageComponent} from "./components/house-page/house-page.component";
-import {HouseService} from "./services/house.service";
+import { BookPageComponent } from "./components/book-page/book-page.component";
+import { CharacterPageComponent } from "./components/character-page/character-page.component";
+import { CharacterService } from "./services/character.service";
+import { HousePageComponent } from "./components/house-page/house-page.component";
+import { HouseService } from "./services/house.service";
+import { BusinessCardAppComponent} from "./components/business-card-app/business-card-app.component";
 
 let routes: Route[] = [
     { path: "houses", component: HousePageComponent },

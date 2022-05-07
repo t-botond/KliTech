@@ -12,13 +12,13 @@ var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
 var platform_browser_1 = require("@angular/platform-browser");
 var ng2_bootstrap_1 = require("ng2-bootstrap");
-var business_card_app_component_1 = require("./components/business-card-app/business-card-app.component");
 var book_service_1 = require("./services/book.service");
 var book_page_component_1 = require("./components/book-page/book-page.component");
 var character_page_component_1 = require("./components/character-page/character-page.component");
 var character_service_1 = require("./services/character.service");
 var house_page_component_1 = require("./components/house-page/house-page.component");
 var house_service_1 = require("./services/house.service");
+var business_card_app_component_1 = require("./components/business-card-app/business-card-app.component");
 var routes = [
     { path: "houses", component: house_page_component_1.HousePageComponent },
     { path: "houses/:id", component: house_page_component_1.HousePageComponent },
