@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/rx";
 import { Http } from '@angular/http';
 import {Book} from "../models/book.type";
-import {Character} from "../models/character.type";
 
 
 @Injectable()

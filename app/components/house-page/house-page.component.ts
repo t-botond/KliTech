@@ -1,10 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs/rx";
-import { BookService } from "../../services/book.service";
 import {CharacterService} from "../../services/character.service";
 import {Character} from "../../models/character.type";
 import { ActivatedRoute } from "@angular/router";
-import {Book} from "../../models/book.type";
 import {HouseService} from "../../services/house.service";
 import {House} from "../../models/house.type";
 

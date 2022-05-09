@@ -13,7 +13,7 @@ export class GotAppComponent implements OnInit {
      * Főoldal konstrukora
      * @param router Routok kezelése
      */
-    constructor(private router: Router) { }
+    constructor(public router: Router) { }
     ngOnInit() {
         this.currentPageTitle = this.router.events
             .filter(e => e instanceof NavigationEnd)
