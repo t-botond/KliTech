@@ -13,6 +13,10 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var _ = require("lodash");
 var GotAppComponent = (function () {
+    /**
+     * Főoldal konstrukora
+     * @param router Routok kezelése
+     */
     function GotAppComponent(router) {
         this.router = router;
         this.title = "GOT Wiki";

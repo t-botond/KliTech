@@ -90,12 +90,12 @@ export class BookPageComponent implements OnInit {
     }
 
     /**
-     *
-     * @param c
+     * Karakter nevének lekérdezése. Ha nincs neve, visszatér az aliassal.
+     * @param actor A karakter aminek a nevét le szeretnénk kérdezni.
      */
-    getCharacterName(c:Character):string{
-        if(c.name==="") return c.aliases[0];
-        return c.name;
+    getCharacterName(actor:Character):string{
+        if(actor.name==="") return actor.aliases[0];
+        return actor.name;
     }
 
 }

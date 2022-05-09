@@ -8,6 +8,11 @@ import { Observable } from "rxjs/rx";
     templateUrl: './got-app.component.html'
 })
 export class GotAppComponent implements OnInit {
+
+    /**
+     * Főoldal konstrukora
+     * @param router Routok kezelése
+     */
     constructor(private router: Router) { }
     ngOnInit() {
         this.currentPageTitle = this.router.events

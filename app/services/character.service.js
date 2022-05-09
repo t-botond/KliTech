@@ -16,19 +16,35 @@ var CharacterService = (function () {
         this.http = http;
         this.characterUrl = 'https://www.anapioficeandfire.com/api/characters/';
     }
+    /**
+     * Karakterek listájának lekérdezése az API-tól
+     * @param pageNumber Oldalszám
+     * @param pageSize Oldalon megjelenő entitások száma
+     */
     CharacterService.prototype.getCharacters = function (pageNumber, pageSize) {
         if (pageNumber === void 0) { pageNumber = 1; }
         if (pageSize === void 0) { pageSize = 10; }
         return this.http.get(this.characterUrl + "?pageSize=" + pageSize + "&page=" + pageNumber).map(function (response) { return response.json(); });
     };
-    CharacterService.prototype.getCharacterID = function (url) {
+    /**
+     * Entitás azonosítóját állítja elő.
+     * @param url Entitás címe.
+     */
+    CharacterService.prototype.getID = function (url) {
+        if (typeof url === "undefined")
+            return "";
         return Number.parseInt(url.split('/')[5]).toString();
     };
+    /**
+     * Karakter lekérdezése ID alapján
+     * @param url Karakter URL-je
+     * @param id Opcionálisan lekérdezhető ID alapján is.
+     */
     CharacterService.prototype.getCharacterById = function (url, id) {
         if (typeof id !== "undefined")
             return this.http.get(this.characterUrl + id).map(function (response) { return response.json(); });
         else
-            return this.http.get(this.characterUrl + this.getCharacterID(url)).map(function (response) { return response.json(); });
+            return this.http.get(this.characterUrl + this.getID(url)).map(function (response) { return response.json(); });
     };
     return CharacterService;
 }());

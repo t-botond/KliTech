@@ -13,6 +13,13 @@ import {House} from "../../models/house.type";
     templateUrl: "./house-page.component.html"
 })
 export class HousePageComponent implements OnInit {
+
+    /**
+     * HousePageComponent konstrukor dependecy injecion-nel
+     * @param houseService Házakat lekérdező service
+     * @param route Rout információk kinyeréséhez
+     * @param characterService Karaktereket lekérdező service
+     */
     constructor(private houseService: HouseService, private route: ActivatedRoute, private characterService:CharacterService) { }
 
     maxPages:number=46;
@@ -20,6 +27,9 @@ export class HousePageComponent implements OnInit {
     selectedHouse:House;
     currentPage:number=1;
 
+    /**
+     * Inincializáláskor lekérdezzük a házaka, illetve megnézzük, hogy van-e konkrét ház amit azonnal meg kellene jeleníteni.
+     */
     ngOnInit() {
         this.getHouses();
         this.route.params.subscribe(params => {
@@ -32,6 +42,11 @@ export class HousePageComponent implements OnInit {
         });
     }
 
+    /**
+     * Házak listájának elkérése a service-től
+     * @param pageNumber Ahanyadik oldalon állunk
+     * @param pageSize Oldalon megjelenő elemek száma
+     */
     getHouses(pageNumber:number=1, pageSize:number=10) {
         this.houseService.getHouses(pageNumber, pageSize).subscribe(it => {
             this.houses=it;
@@ -45,6 +60,11 @@ export class HousePageComponent implements OnInit {
     cadetBranches:House[]=[];
     swornMembers:Character[]=[];
 
+    /**
+     * Megjelenített ház módosítása.
+     * Előtöltjük az adatokat.
+     * @param house Az aktuálisan megjelenő ház
+     */
     modHouse(house:House){
         this.selectedHouse=house;
 
@@ -90,15 +110,22 @@ export class HousePageComponent implements OnInit {
         }
     }
 
-
+    /**
+     * Entitás azonosítóját állítja elő.
+     * @param url Entitás címe.
+     */
     getID(url:string):string{
         if(typeof url==="undefined")return "";
         return Number.parseInt(url.split('/')[5]).toString();
     }
-    getCharacterName(c:Character):string{
-        if(typeof c ==="undefined") return ;
-        if(c.name==="") return c.aliases[0];
-        return c.name;
+
+    /**
+     * Karakter nevének lekérdezése. Ha nincs neve, visszatér az aliassal.
+     * @param actor A karakter aminek a nevét le szeretnénk kérdezni.
+     */
+    getCharacterName(actor:Character):string{
+        if(actor.name==="") return actor.aliases[0];
+        return actor.name;
     }
 
 }

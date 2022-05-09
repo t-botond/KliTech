@@ -18,6 +18,9 @@ var BookService = (function () {
         this.bookUrl = 'https://www.anapioficeandfire.com/api/books/';
         this.hasCopy = false;
     }
+    /**
+     * Az össes könyv lekérdezése a service-től. Ha korábban már lekérdezte, akkor a mentett tartalommal tér vissza.
+     */
     BookService.prototype.getBooks = function () {
         var _this = this;
         if (this.hasCopy)
@@ -29,14 +32,25 @@ var BookService = (function () {
         });
         return tmp;
     };
-    BookService.prototype.getBookID = function (url) {
+    /**
+     * Entitás azonosítóját állítja elő.
+     * @param url Entitás címe.
+     */
+    BookService.prototype.getID = function (url) {
+        if (typeof url === "undefined")
+            return "";
         return Number.parseInt(url.split('/')[5]).toString();
     };
+    /**
+     * Könyv lekérdezése ID alapján
+     * @param url Könyv URL-je
+     * @param id Opcionálisan lekérdezhető ID alapján is.
+     */
     BookService.prototype.getBookById = function (url, id) {
         if (typeof id !== "undefined")
             return this.http.get(this.bookUrl + id).map(function (response) { return response.json(); });
         else
-            return this.http.get(this.bookUrl + this.getBookID(url)).map(function (response) { return response.json(); });
+            return this.http.get(this.bookUrl + this.getID(url)).map(function (response) { return response.json(); });
     };
     return BookService;
 }());

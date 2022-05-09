@@ -89,13 +89,13 @@ var BookPageComponent = (function () {
         return date.toString().substr(0, 10);
     };
     /**
-     *
-     * @param c
+     * Karakter nevének lekérdezése. Ha nincs neve, visszatér az aliassal.
+     * @param actor A karakter aminek a nevét le szeretnénk kérdezni.
      */
-    BookPageComponent.prototype.getCharacterName = function (c) {
-        if (c.name === "")
-            return c.aliases[0];
-        return c.name;
+    BookPageComponent.prototype.getCharacterName = function (actor) {
+        if (actor.name === "")
+            return actor.aliases[0];
+        return actor.name;
     };
     return BookPageComponent;
 }());

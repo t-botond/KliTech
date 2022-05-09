@@ -114,15 +114,19 @@ export class CharacterPageComponent implements OnInit {
     }
 
     /**
-     * Visszatér a karakter name attribútumával ha nem üres.
-     * Amennyiben a name üres, akkor az első alias-sal.
-     * @param c
+     * Karakter nevének lekérdezése. Ha nincs neve, visszatér az aliassal.
+     * @param actor A karakter aminek a nevét le szeretnénk kérdezni.
      */
-    getCharacterName(c:Character):string{
-        if(typeof c ==="undefined") return ;
-        if(c.name==="") return c.aliases[0];
-        return c.name;
+    getCharacterName(actor:Character):string{
+        if(typeof actor === "undefined") return "";
+        if(actor.name==="") return actor.aliases[0];
+        return actor.name;
     }
+
+    /**
+     * Entitás azonosítójának lekérdezése.
+     * @param url Entitás URL-je.
+     */
     getID(url:string):string{
         return Number.parseInt(url.split('/')[5]).toString();
     }
