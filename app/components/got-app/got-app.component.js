@@ -12,26 +12,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var _ = require("lodash");
-var BusinessCardAppComponent = (function () {
-    function BusinessCardAppComponent(router) {
+var GotAppComponent = (function () {
+    function GotAppComponent(router) {
         this.router = router;
         this.title = "GOT Wiki";
         this.isNavbarCollapsed = true;
     }
-    BusinessCardAppComponent.prototype.ngOnInit = function () {
+    GotAppComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.currentPageTitle = this.router.events
             .filter(function (e) { return e instanceof router_1.NavigationEnd; })
             .map((function () { return _.find(["Character", "Houses", "Books"], function (t) { return _this.router.isActive('/' + t.toLowerCase(), false); }); }).bind(this));
     };
-    return BusinessCardAppComponent;
+    return GotAppComponent;
 }());
-BusinessCardAppComponent = __decorate([
+GotAppComponent = __decorate([
     core_1.Component({
         selector: 'business-card-app',
-        templateUrl: './business-card-app.component.html'
+        templateUrl: './got-app.component.html'
     }),
     __metadata("design:paramtypes", [router_1.Router])
-], BusinessCardAppComponent);
-exports.BusinessCardAppComponent = BusinessCardAppComponent;
-//# sourceMappingURL=business-card-app.component.js.map
+], GotAppComponent);
+exports.GotAppComponent = GotAppComponent;
+//# sourceMappingURL=got-app.component.js.map

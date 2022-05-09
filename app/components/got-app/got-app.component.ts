@@ -5,9 +5,9 @@ import { Observable } from "rxjs/rx";
 
 @Component({
     selector: 'business-card-app',
-    templateUrl: './business-card-app.component.html'
+    templateUrl: './got-app.component.html'
 })
-export class BusinessCardAppComponent implements OnInit {
+export class GotAppComponent implements OnInit {
     constructor(private router: Router) { }
     ngOnInit() {
         this.currentPageTitle = this.router.events

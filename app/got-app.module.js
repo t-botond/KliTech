@@ -18,7 +18,7 @@ var character_page_component_1 = require("./components/character-page/character-
 var character_service_1 = require("./services/character.service");
 var house_page_component_1 = require("./components/house-page/house-page.component");
 var house_service_1 = require("./services/house.service");
-var business_card_app_component_1 = require("./components/business-card-app/business-card-app.component");
+var got_app_component_1 = require("./components/got-app/got-app.component");
 var routes = [
     { path: "houses", component: house_page_component_1.HousePageComponent },
     { path: "houses/:id", component: house_page_component_1.HousePageComponent },
@@ -27,19 +27,19 @@ var routes = [
     { path: "character", component: character_page_component_1.CharacterPageComponent },
     { path: "character/:id", component: character_page_component_1.CharacterPageComponent },
 ];
-var BusinessCardAppModule = (function () {
-    function BusinessCardAppModule() {
+var GotAppModule = (function () {
+    function GotAppModule() {
     }
-    return BusinessCardAppModule;
+    return GotAppModule;
 }());
-BusinessCardAppModule = __decorate([
+GotAppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, router_1.RouterModule.forRoot(routes), forms_1.FormsModule, http_1.HttpModule, ng2_bootstrap_1.CollapseModule.forRoot()],
-        declarations: [business_card_app_component_1.BusinessCardAppComponent, house_page_component_1.HousePageComponent, book_page_component_1.BookPageComponent, character_page_component_1.CharacterPageComponent],
+        declarations: [got_app_component_1.GotAppComponent, house_page_component_1.HousePageComponent, book_page_component_1.BookPageComponent, character_page_component_1.CharacterPageComponent],
         exports: [],
         providers: [book_service_1.BookService, house_service_1.HouseService, character_service_1.CharacterService],
-        bootstrap: [business_card_app_component_1.BusinessCardAppComponent]
+        bootstrap: [got_app_component_1.GotAppComponent]
     })
-], BusinessCardAppModule);
-exports.BusinessCardAppModule = BusinessCardAppModule;
-//# sourceMappingURL=business-card-app.module.js.map
+], GotAppModule);
+exports.GotAppModule = GotAppModule;
+//# sourceMappingURL=got-app.module.js.map

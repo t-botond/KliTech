@@ -11,7 +11,8 @@ import { CharacterPageComponent } from "./components/character-page/character-pa
 import { CharacterService } from "./services/character.service";
 import { HousePageComponent } from "./components/house-page/house-page.component";
 import { HouseService } from "./services/house.service";
-import { BusinessCardAppComponent} from "./components/business-card-app/business-card-app.component";
+import {GotAppComponent} from "./components/got-app/got-app.component";
+
 
 let routes: Route[] = [
     { path: "houses", component: HousePageComponent },
@@ -27,9 +28,9 @@ let routes: Route[] = [
 
 @NgModule({
     imports: [BrowserModule, RouterModule.forRoot(routes), FormsModule, HttpModule, CollapseModule.forRoot()],
-    declarations: [BusinessCardAppComponent, HousePageComponent,BookPageComponent, CharacterPageComponent],
+    declarations: [GotAppComponent, HousePageComponent,BookPageComponent, CharacterPageComponent],
     exports: [],
     providers: [BookService, HouseService,CharacterService],
-    bootstrap: [BusinessCardAppComponent]
+    bootstrap: [GotAppComponent]
 })
-export class BusinessCardAppModule { }
+export class GotAppModule { }
